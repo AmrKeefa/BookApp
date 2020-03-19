@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 circleProgressBar.setVisibility(View.VISIBLE);
+                adapter.clear();
                 String userInput = mEditTextField.getText().toString();
                 apiInterface = retrofit.create(ApiInterface.class);
 
