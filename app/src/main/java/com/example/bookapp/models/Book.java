@@ -11,11 +11,14 @@ public class Book {
 
     private String publishedDate;
 
-public Book(String title, String publisher, String description, String publishedDate){
+    private String infoLink;
+
+public Book(String title, String publisher, String description, String publishedDate,String infoLink){
     this.title = title;
     this.publisher = publisher;
     this.description = description;
     this.publishedDate = publishedDate;
+    this.infoLink = infoLink;
 }
 
 
@@ -34,6 +37,10 @@ public String getDescription(){
 
 public String getPublishedDate(){
     return publishedDate;
+}
+public String getInfoLink(){
+    return infoLink;
+
 }
 
 

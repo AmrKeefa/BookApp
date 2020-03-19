@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.bookapp.models.Book;
 import com.example.bookapp.models.Items;
 
@@ -17,10 +15,10 @@ import java.util.List;
 public class BooksAdapter extends ArrayAdapter<Items> {
 
 
-
-    public BooksAdapter(Context context, List<Items>earthquakes) {
-        super(context,0, earthquakes);
+    public BooksAdapter(Context context, List<Items> earthquakes) {
+        super(context, 0, earthquakes);
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if there is an existing list item view (called convertView) that we can reuse,
@@ -33,25 +31,23 @@ public class BooksAdapter extends ArrayAdapter<Items> {
 
 
         // Find the earthquake at the given position in the list of earthquakes
-        Items currentItems= getItem(position);
+        Items currentItems = getItem(position);
         Book currentBook = currentItems.getBook();
 
         // Find the TextView with view ID magnitude
-        TextView textViewtitle =  listItemView.findViewById(R.id.title);
+        TextView textViewtitle = listItemView.findViewById(R.id.title);
         textViewtitle.setText(currentBook.getTitle());
 
-
-
         // Find the TextView with view ID location
-        TextView textViewDescription =  listItemView.findViewById(R.id.description);
+        TextView textViewDescription = listItemView.findViewById(R.id.description);
         // Display the location of the current earthquake in that TextView
         textViewDescription.setText(currentBook.getDescription());
 
         // Find the TextView with view ID location offset
-        TextView textViewPublishedDate =  listItemView.findViewById(R.id.published_date);
-        textViewPublishedDate.setText( currentBook.getPublishedDate());
+        TextView textViewPublishedDate = listItemView.findViewById(R.id.published_date);
+        textViewPublishedDate.setText(currentBook.getPublishedDate());
 
-        TextView textViewPublisher =  listItemView.findViewById(R.id.publisher);
+        TextView textViewPublisher = listItemView.findViewById(R.id.publisher);
         textViewPublisher.setText(currentBook.getPublisher());
 
 
