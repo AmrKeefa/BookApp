@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.bookapp.models.Items;
 import com.example.bookapp.models.MainObject;
@@ -46,16 +47,12 @@ public class MainActivity extends AppCompatActivity {
         mEditTextField = findViewById(R.id.search_view_field);
         adapter = new BooksAdapter(this, new ArrayList<Items>());
         listView = findViewById(R.id.list);
-
-
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.googleapis.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiInterface = retrofit.create(ApiInterface.class);
-
         Call<MainObject> call = apiInterface.getNews("android", 20);
-
         call.enqueue(new Callback<MainObject>() {
             @Override
             @Nullable
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
             }
-
             @Override
             public void onFailure(Call<MainObject> call, Throwable t) {
 
@@ -83,32 +79,54 @@ public class MainActivity extends AppCompatActivity {
                 circleProgressBar.setVisibility(View.VISIBLE);
                 adapter.clear();
                 String userInput = mEditTextField.getText().toString();
-                apiInterface = retrofit.create(ApiInterface.class);
-
-                Call<MainObject> call = apiInterface.getNews(userInput, 20);
-
-                call.enqueue(new Callback<MainObject>() {
-                    @Override
-                    @Nullable
-                    public void onResponse(Call<MainObject> call, Response<MainObject> response) {
-                        if (response.isSuccessful()) {
-                            MainObject mainObject = response.body();
-                            List<Items> items = mainObject.getBookItems();
-                            adapter.clear();
-                            adapter.addAll(items);
-                            circleProgressBar.setVisibility(GONE);
-                            listView.setAdapter(adapter);
+                if (userInput == " "){
+                    apiInterface = retrofit.create(ApiInterface.class);
+                    Call<MainObject> call = apiInterface.getNews("android", 20);
+                    call.enqueue(new Callback<MainObject>() {
+                        @Override
+                        @Nullable
+                        public void onResponse(Call<MainObject> call, Response<MainObject> response) {
+                            if (response.isSuccessful()) {
+                                MainObject mainObject = response.body();
+                                List<Items> items = mainObject.getBookItems();
+                                adapter.clear();
+                                adapter.addAll(items);
+                                circleProgressBar.setVisibility(GONE);
+                                listView.setAdapter(adapter);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<MainObject> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<MainObject> call, Throwable t) {
 
-                        Log.e("MainActivity", t.getMessage());
-                    }
-                });
+                            Log.e("MainActivity", t.getMessage());
+                        }
+                    });
+                } else{
+                    apiInterface = retrofit.create(ApiInterface.class);
+                    Call<MainObject> call = apiInterface.getNews(userInput, 20);
+                    call.enqueue(new Callback<MainObject>() {
+                        @Override
+                        @Nullable
+                        public void onResponse(Call<MainObject> call, Response<MainObject> response) {
+                            if (response.isSuccessful()) {
+                                MainObject mainObject = response.body();
+                                List<Items> items = mainObject.getBookItems();
+                                adapter.clear();
+                                adapter.addAll(items);
+                                circleProgressBar.setVisibility(GONE);
+                                listView.setAdapter(adapter);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MainObject> call, Throwable t) {
+                            Log.e("MainActivity", t.getMessage());
+                        }
+                    });
 
 
+                }
             }
         });
 
