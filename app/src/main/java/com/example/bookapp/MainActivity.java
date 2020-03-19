@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 circleProgressBar.setVisibility(View.VISIBLE);
                 adapter.clear();
                 String userInput = mEditTextField.getText().toString();
-                if (userInput == " "){
+                if (userInput.isEmpty()){
                     apiInterface = retrofit.create(ApiInterface.class);
                     Call<MainObject> call = apiInterface.getNews("android", 20);
                     call.enqueue(new Callback<MainObject>() {
